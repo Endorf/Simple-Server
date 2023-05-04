@@ -1,13 +1,16 @@
-server {
-  listen 80 default_server;
+events {
+  worker_connections  1024;
+}
 
-  root {{ document_root }};
-  index index.html index.htm;
+http {
+  server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name {{ server_name }};
+    root {{ document_root }};
 
-  server_name {{ server_name }};
-  
-  location / {
-   default_type "text/html";
-   try_files $uri $uri/;
+    location / {
+      try_files $uri $uri/ =404;
+    }
   }
 }
