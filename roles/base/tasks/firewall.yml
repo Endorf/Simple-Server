@@ -1,0 +1,13 @@
+---
+- name: start firewalld
+  service: name=firewalld state=started enabled=yes
+
+- name: Init Firewalld
+  firewalld:
+    state: enabled 
+    permanent: yes
+    immediate: yes
+    service: "{{ item }}"
+  with_items:
+    - http
+    - https

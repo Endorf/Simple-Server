@@ -5,3 +5,6 @@
         (ansible_distribution == "CentosOS" and ansible_distribution_major_version == "8")
   tags:
     - initCentos
+
+- name: Start Firewall
+  include_tasks: firewall.yml
