@@ -1,0 +1,10 @@
+---
+- name: Install NGINX
+  yum:
+    name: nginx
+    state: latest
+- name: Run NGINX
+  service:
+    name: nginx
+    state: started
+    enabled: yes

@@ -8,3 +8,11 @@
 
   roles:
   - base
+
+- name: Install Server environment
+  connection: local
+  hosts: all
+  become: yes
+
+  roles:
+  - webserver
