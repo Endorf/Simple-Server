@@ -8,3 +8,6 @@
 
 - name: Start Firewall
   include_tasks: firewall.yml
+
+- name: Add Users
+  include_tasks: users.yml

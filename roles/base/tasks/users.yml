@@ -1,0 +1,22 @@
+---
+- name: Include web admin user
+  include_vars:
+    file: "vars/secret.yml"
+
+- name: "create group" 
+  group:
+    name: "{{ item }}"  
+  loop: 
+      - "admins"
+      - "engineers"
+
+- name: Add users
+  user:
+    state: present
+    name: "{{ item.name }}"
+    password: "{{ tmppass | password_hash('sha512') }}"
+    update_password: on_create
+    groups: "{{ item.group }}"
+  loop:
+    - { name: 'engineer1', group: 'engineers' }
+    - { name: 'engineer2', group: 'engineers' }
