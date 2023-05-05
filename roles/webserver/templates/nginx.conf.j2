@@ -1,16 +1,21 @@
-events {
-  worker_connections  1024;
-}
+server {
 
-http {
-  server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-    server_name {{ server_name }};
-    root {{ document_root }};
+  listen 80 default_server;
+  server_name {{ server_name }};
 
-    location / {
-      try_files $uri $uri/ =404;
-    }
+  root {{ document_root }}/{{ application_dir }};
+  index index.html index.htm;
+
+  access_log {{ log_root }}/{{ application_dir }}.access.log;
+  error_log {{ log_root }}/{{ application_dir }}.error.log;
+
+  location / {
+   default_type "text/html";
+   try_files $uri.html $uri $uri/ =404;
+  }
+
+  location /test {
+    access_log {{ log_root }}/{{ application_dir }}.test.access.log;
+    error_log {{ log_root }}/{{ application_dir }}.test.error.log;
   }
 }
