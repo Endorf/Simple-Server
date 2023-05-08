@@ -18,4 +18,9 @@ server {
     access_log {{ log_root }}/{{ application_dir }}.test.access.log;
     error_log {{ log_root }}/{{ application_dir }}.test.error.log;
   }
+
+  location /metrics {
+    stub_status on;
+  }
+  
 }
