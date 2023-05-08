@@ -16,3 +16,13 @@
 
   roles:
   - webserver
+
+
+- name: Setup monitoring
+  connection: local
+  hosts: all
+  become: yes
+
+  roles:
+  - monitoring
+
