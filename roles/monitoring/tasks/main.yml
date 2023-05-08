@@ -1,0 +1,11 @@
+---
+- name: Install Prometeus
+  vars:
+    user: prometheus
+    user_group: prometheus
+    db_dir: /var/lib/prometheus
+    config_dir: /etc/prometheus
+    work_dir: /usr/local/bin/
+    prometheus_version: 2.43.1
+    prometheus_checksum: "8bc4d4e1021c5e538162716b8c0a624343100ea07c17643ba793a0c4ef493355"
+  include_tasks: prometeus-install.yml

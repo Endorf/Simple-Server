@@ -1,0 +1,89 @@
+---
+- name: Create Prometheus user
+  block:
+
+  - name: Create Group 
+    group:
+      name: "{{ user_group }}"
+
+  - name: Add Prometheus user
+    user:
+      state: present
+      system: true
+      shell: "/usr/sbin/nologin"
+      name: "{{ user }}"
+      groups: "{{ user_group }}"
+      createhome: false
+      home: "{{ db_dir }}"
+
+  - name: Create user home directory
+    file:
+      path: "{{ db_dir }}"
+      state: directory
+      owner: prometheus
+      group: prometheus
+      mode: 0755
+
+  - name: Create user configuration directories
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: root
+      group: prometheus
+      mode: 0770
+    loop:
+      - "{{ config_dir }}"
+      - "{{ config_dir }}/rules"
+      - "{{ config_dir }}/file_sd"
+
+
+- name: Install Prometheus
+  vars:
+    prometheus_url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+    dest_tmp_archive_path: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+    dest_tmp_path: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64"
+    
+  block:
+  - name: Download Prometheus to local folder
+    become: false
+    get_url:
+      url: "{{ prometheus_url }}"
+      dest: "{{ dest_tmp_archive_path }}"
+      checksum: "sha256:{{ prometheus_checksum }}"
+    register: _download_archive
+    until: _download_archive is succeeded
+    retries: 2
+    delay: 1
+    delegate_to: localhost
+    check_mode: false
+
+  - name: Unpack Prometheus binaries
+    become: false
+    unarchive:
+      src: "{{ dest_tmp_archive_path }}"
+      dest: "/tmp"
+      creates: "{{ dest_tmp_path }}/prometheus"
+    delegate_to: localhost
+    check_mode: false
+
+  - name: Copy promtool prometheus
+    copy:
+      src: "{{ dest_tmp_path }}"
+      dest: "{{ work_dir }}/{{ item }}/"
+      mode: 0644
+      owner: root
+      group: prometheus
+    with_items:
+      - prometheus
+      - promtool
+
+  - name: Copy console libs
+    copy:
+      src: "{{ dest_tmp_path }}"
+      dest: "{{ config_dir }}/{{ item }}/"
+      mode: 0644
+      owner: root
+      group: prometheus
+    with_items:
+      - console_libraries
+      - consoles
