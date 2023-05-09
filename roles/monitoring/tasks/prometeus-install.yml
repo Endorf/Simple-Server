@@ -76,6 +76,8 @@
     with_items:
       - prometheus
       - promtool
+    notify:
+      - Restart Prometheus
 
   - name: Copy console libs
     copy:
@@ -87,3 +89,5 @@
     with_items:
       - console_libraries
       - consoles
+    notify:
+      - Restart Prometheus
