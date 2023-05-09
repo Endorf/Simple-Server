@@ -69,7 +69,7 @@
   - name: Copy promtool prometheus
     copy:
       src: "{{ dest_tmp_path }}"
-      dest: "{{ work_dir }}/{{ item }}/"
+      dest: "{{ work_dir }}/{{ item }}"
       mode: 0644
       owner: root
       group: prometheus
@@ -80,7 +80,7 @@
   - name: Copy console libs
     copy:
       src: "{{ dest_tmp_path }}"
-      dest: "{{ config_dir }}/{{ item }}/"
+      dest: "{{ config_dir }}/{{ item }}"
       mode: 0644
       owner: root
       group: prometheus
