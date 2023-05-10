@@ -4,15 +4,15 @@
 
   - name: Create Group 
     group:
-      name: "{{ user_group }}"
+      name: "{{ prometheus_user_group }}"
 
   - name: Add Prometheus user
     user:
       state: present
       system: true
       shell: "/usr/sbin/nologin"
-      name: "{{ user }}"
-      groups: "{{ user_group }}"
+      name: "{{ prometheus_user }}"
+      groups: "{{ prometheus_user_group }}"
       createhome: false
       home: "{{ db_dir }}"
 
@@ -20,16 +20,16 @@
     file:
       path: "{{ db_dir }}"
       state: directory
-      owner: prometheus
-      group: prometheus
+      owner: "{{ prometheus_user }}"
+      group: "{{ prometheus_user_group }}"
       mode: 0755
 
   - name: Create user configuration directories
     file:
       path: "{{ item }}"
       state: directory
-      owner: root
-      group: prometheus
+      owner: "{{ prometheus_user }}"
+      group: "{{ prometheus_user_group }}"
       mode: 0770
     loop:
       - "{{ config_dir }}"
@@ -68,26 +68,22 @@
 
   - name: Copy promtool prometheus
     copy:
-      src: "{{ dest_tmp_path }}"
+      src: "{{ dest_tmp_path }}/{{ item }}"
       dest: "{{ work_dir }}/{{ item }}"
       mode: 0644
-      owner: root
-      group: prometheus
+      owner: "{{ prometheus_user }}"
+      group: "{{ prometheus_user_group }}"
     with_items:
       - prometheus
       - promtool
-    notify:
-      - Restart Prometheus
 
   - name: Copy console libs
     copy:
-      src: "{{ dest_tmp_path }}"
+      src: "{{ dest_tmp_path }}/{{ item }}/"
       dest: "{{ config_dir }}/{{ item }}"
       mode: 0644
-      owner: root
-      group: prometheus
+      owner: "{{ prometheus_user }}"
+      group: "{{ prometheus_user_group }}"
     with_items:
       - console_libraries
       - consoles
-    notify:
-      - Restart Prometheus

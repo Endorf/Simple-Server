@@ -1,8 +1,8 @@
 ---
 - name: Install Prometeus
   vars:
-    user: prometheus
-    user_group: prometheus
+    prometheus_user: prometheus
+    prometheus_user_group: prometheus
     db_dir: /var/lib/prometheus
     config_dir: /etc/prometheus
     work_dir: /usr/local/bin
