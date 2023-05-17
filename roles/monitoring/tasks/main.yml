@@ -1,5 +1,5 @@
 ---
-- name: Install Prometeus
+- name: Install Prometheus
   vars:
     prometheus_user: prometheus
     prometheus_user_group: prometheus
