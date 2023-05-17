@@ -1,0 +1,8 @@
+---
+- name: Create config file
+  template:
+    src: "prometheus.yml.j2"
+    dest: "{{ config_file }}"
+    mode: preserve
+  notify:
+    - Restart Prometheus
