@@ -70,7 +70,7 @@
     copy:
       src: "{{ dest_tmp_path }}/{{ item }}"
       dest: "{{ work_dir }}/{{ item }}"
-      mode: 0644
+      mode: 0754
       owner: "{{ prometheus_user }}"
       group: "{{ prometheus_user_group }}"
     with_items:
