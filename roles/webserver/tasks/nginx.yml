@@ -1,8 +1,8 @@
 ---
 - name: Install NGINX
   yum:
-    name: nginx
-    state: latest
+    name: "nginx-{{ nginx_version }}"
+    state: present
     update_cache: yes
 
 - name: Creates website directory

@@ -1,4 +1,8 @@
 ---
+- name: Include variables
+  include_vars:
+    dir: vars
+
 - name: Start NGINX
   vars:
     server_name: "{{ ansible_default_ipv4.address }}"
