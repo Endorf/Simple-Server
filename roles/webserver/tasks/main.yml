@@ -5,3 +5,14 @@
 
 - name: Start NGINX
   include_tasks: nginx.yml
+
+- name: package present
+  ansible.builtin.package:
+    name: "libsemanage-python"
+    state: present
+
+- name: Set httpd_can_network_connect flag on
+  seboolean:
+    name: httpd_can_network_connect
+    state: true
+    persistent: true
