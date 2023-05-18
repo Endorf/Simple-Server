@@ -4,9 +4,4 @@
     dir: vars
 
 - name: Start NGINX
-  vars:
-    server_name: "{{ ansible_default_ipv4.address }}"
-    document_root: /var/www/html
-    log_root: /var/log/nginx
-    application_dir: site
   include_tasks: nginx.yml
