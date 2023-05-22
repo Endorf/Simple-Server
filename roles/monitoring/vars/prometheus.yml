@@ -1,12 +1,18 @@
 ---
-# Prometheus config variables
-
+# Prometheus variables
+# General user variables
 prometheus_user: prometheus
 prometheus_user_group: prometheus
 
+work_dir: /usr/local/bin
+
+# Prometheus variables
 prometheus_checksum: "8bc4d4e1021c5e538162716b8c0a624343100ea07c17643ba793a0c4ef493355"
 
 db_dir: /var/lib/prometheus
 config_dir: /etc/prometheus
 config_file: /etc/prometheus/prometheus.yml
-work_dir: /usr/local/bin
+
+# Node Exporter variables
+ne_db_dir: /var/lib/node_exporter
+ne_config_dir: /etc/node_exporter
