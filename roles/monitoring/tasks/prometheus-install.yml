@@ -110,6 +110,7 @@
     get_url:
       url: "{{ node_exporter_url }}"
       dest: "{{ dest_tmp_archive_path }}"
+      checksum: "sha256:{{ node_exporter_checksum }}"
     register: _download_archive
     until: _download_archive is succeeded
     retries: 2
