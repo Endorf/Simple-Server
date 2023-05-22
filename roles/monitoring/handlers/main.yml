@@ -10,3 +10,11 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
+
+- name: Restart Node Exporter
+  become: true
+  systemd:
+    name: node_exporter
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
