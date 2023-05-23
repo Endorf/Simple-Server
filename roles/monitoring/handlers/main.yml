@@ -18,3 +18,11 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
+
+- name: Restart Alert Manager
+  become: true
+  systemd:
+    name: alertmanager
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
