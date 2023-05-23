@@ -22,3 +22,4 @@ ne_db_dir: /var/lib/node_exporter
 alert_manager_checksum: "206cf787c01921574ca171220bb9b48b043c3ad6e744017030fed586eb48e04b"
 
 am_work_dir: /opt/alertmanager
+alert_dir: /etc/prometheus/rules

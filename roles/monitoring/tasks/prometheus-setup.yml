@@ -6,3 +6,12 @@
     mode: preserve
   notify:
     - Restart Prometheus
+
+- name: Create alert file
+  template:
+    src: "alert.yml.j2"
+    dest: "{{ alert_dir }}/alert.yml"
+    mode: preserve
+  notify:
+    - Restart Alert Manager
+    - Restart Prometheus
